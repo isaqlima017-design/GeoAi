@@ -1,0 +1,211 @@
+css
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #080b12;
+    color: #eeeeee;
+}
+
+.app {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+h1 {
+    margin: 0;
+}
+
+header p {
+    color: #8992a5;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    background: #5865f2;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+#thoughtButton {
+    background: #9b3cff;
+}
+
+#suspiciousCount {
+    background: #ff3b3b;
+    border-radius: 50%;
+    padding: 3px 8px;
+    margin-left: 5px;
+}
+
+.card {
+    background: #111722;
+    border: 1px solid #202938;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.status-grid div {
+    background: #181f2c;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.status-grid span {
+    display: block;
+    color: #8992a5;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.status-grid strong {
+    font-size: 20px;
+}
+
+.conversation {
+    height: 300px;
+    overflow-y: auto;
+    background: #090d14;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.message {
+    padding: 10px 14px;
+    margin: 8px 0;
+    border-radius: 10px;
+    max-width: 80%;
+}
+
+.user {
+    background: #303a55;
+    margin-left: auto;
+}
+
+.ai {
+    background: #19251f;
+    margin-right: auto;
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 13px;
+    border-radius: 10px;
+    border: 1px solid #30394b;
+    background: #090d14;
+    color: white;
+    outline: none;
+}
+
+.thought {
+    background: #181f2c;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.thought small {
+    color: #8992a5;
+}
+
+.suspicious {
+    border-left: 4px solid #ff3b3b;
+}
+
+.memory {
+    padding: 10px;
+    border-bottom: 1px solid #252d3b;
+    color: #c9ced8;
+}
+
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #111722;
+    border: 1px solid #30394b;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #333b4a;
+}
+
+.warning {
+    color: #ffb4b4;
+    background: #291719;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+@media (max-width: 700px) {
+
+    header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .status-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .input-area {
+        flex-direction: column;
+    }
+}
+```
