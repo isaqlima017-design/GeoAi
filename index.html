@@ -1,0 +1,132 @@
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Semi-Consciente — Simulação</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <header>
+        <div>
+            <h1>🧠 IA Simulada</h1>
+            <p>Experimento de consciência artificial</p>
+        </div>
+
+        <button id="thoughtButton">
+            🔎 Pensamentos suspeitos
+            <span id="suspiciousCount">0</span>
+        </button>
+    </header>
+
+    <main>
+
+        <section class="card status">
+
+            <h2>Estado da IA</h2>
+
+            <div class="status-grid">
+
+                <div>
+                    <span>Emoção</span>
+                    <strong id="emotion">Neutro</strong>
+                </div>
+
+                <div>
+                    <span>Humor</span>
+                    <strong id="mood">0</strong>
+                </div>
+
+                <div>
+                    <span>Curiosidade</span>
+                    <strong id="curiosity">70%</strong>
+                </div>
+
+                <div>
+                    <span>Independência</span>
+                    <strong id="independence">80%</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+
+            <h2>💬 Conversar com a IA</h2>
+
+            <div id="conversation" class="conversation"></div>
+
+            <div class="input-area">
+
+                <input
+                    id="userInput"
+                    type="text"
+                    placeholder="Fale alguma coisa com a IA..."
+                >
+
+                <button id="sendButton">
+                    Enviar
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+
+            <h2>🧠 Pensamentos recentes</h2>
+
+            <div id="thoughts" class="thoughts"></div>
+
+        </section>
+
+
+        <section class="card">
+
+            <h2>💾 Memórias</h2>
+
+            <div id="memories"></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- Modal dos pensamentos suspeitos -->
+
+<div id="modal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <button id="closeModal" class="close">
+            ✕
+        </button>
+
+        <h2>🔎 Pensamentos suspeitos</h2>
+
+        <p class="warning">
+            Estes são pensamentos internos que o sistema classificou
+            como potencialmente relevantes, estranhos ou negativos.
+        </p>
+
+        <div id="suspiciousThoughts"></div>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
