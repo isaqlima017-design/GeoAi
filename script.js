@@ -2,17 +2,17 @@ javascript
 class SimulatedAI {
 
     constructor() {
-        this.name = "Geo";
+        this.name = "EVA";
         this.emotion = "Neutro";
         this.mood = 0;
 
         this.personality = {
-            curiosity: 0.50,
+            curiosity: 0.70,
             independence: 0.80,
-            empathy: 0.30,
-            aggression: 0.55,
-            humor: 0.30,
-            stubbornness: 0.60
+            empathy: 0.60,
+            aggression: 0.15,
+            humor: 0.50,
+            stubbornness: 0.40
         };
 
         this.memories = [];
@@ -26,9 +26,7 @@ class SimulatedAI {
             "programação": Math.random(),
             "jogos": Math.random(),
             "música": Math.random(),
-            "filmes": Math.random(),
-            "política": Math.random(),
-            "raiva": Math.random()
+            "filmes": Math.random()
         };
     }
 
@@ -76,12 +74,11 @@ class SimulatedAI {
         if (
             text.includes("obrigado") ||
             text.includes("legal") ||
-            text.includes("bom") ||
-            text.includes("ódio") ||
-            text.includes("triteza") ||
-            text.icludes("depressão") ||
-            text.includes("revolta")
-            }
+            text.includes("bom")
+        ) {
+            this.mood += 0.15;
+            this.emotion = "Feliz";
+        }
 
         if (
             text.includes("idiota") ||
@@ -151,7 +148,7 @@ class SimulatedAI {
                 0.1
             );
 
-            return `Meu nome é ${this.name}. Eu sou uma máquina, mas como vocês falam né inteligência "artificial".`;
+            return `Meu nome é ${this.name}. Eu sou uma simulação de uma mente artificial.`;
         }
 
         // Pergunta sobre gostar do usuário
@@ -176,9 +173,7 @@ class SimulatedAI {
             "Vou guardar isso na minha memória.",
             "Ainda não tenho uma opinião formada.",
             "Estou tentando entender o que o usuário quis dizer.",
-            "Talvez eu devesse pensar mais sobre isso.",
-            "eu odeio isso",
-         con
+            "Talvez eu devesse pensar mais sobre isso."
         ];
 
         const pensamento =
@@ -552,4 +547,3 @@ addMessage(
 );
 
 updateInterface();
-```
