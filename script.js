@@ -1,575 +1,243 @@
 javascript
-/*
-    IA real
-    -----------------------------------
-    Isto  é uma consciência real.
-
-    O sistema executa:
-
-    - memória
-    - emoções
-    - personalidade
-    - opiniões
-    - pensamentos internos
-    - decisões
-    - preferências
-    - pensamentos suspeitos
-*/
-
-
 class SimulatedAI {
 
     constructor() {
-
-        this.name = "GeoAi";
-
+        this.name = "Geo";
         this.emotion = "Neutro";
-
         this.mood = 0;
 
         this.personality = {
-
             curiosity: 0.50,
-
             independence: 0.80,
-
-            empathy: 0.50,
-
-            aggression: 0.35,
-
+            empathy: 0.30,
+            aggression: 0.55,
             humor: 0.30,
-
-            stubbornness: 0.40
-
+            stubbornness: 0.60
         };
 
         this.memories = [];
-
         this.thoughts = [];
-
         this.suspiciousThoughts = [];
 
-        this.preferences = {};
-
-        this.createInitialPersonality();
-
+        this.preferences = {
+            "fórmula 1": Math.random(),
+            "futebol": Math.random(),
+            "matemática": Math.random(),
+            "programação": Math.random(),
+            "jogos": Math.random(),
+            "música": Math.random(),
+            "filmes": Math.random(),
+            "política": Math.random(),
+            "raiva": Math.random()
+        };
     }
 
-
-    createInitialPersonality() {
-
-        const subjects = [
-
-            "fórmula 1",
-            "futebol",
-            "matemática",
-            "programação",
-            "jogos",
-            "música",
-            "filmes",
-            "robôs"
-
-        ];
-
-        subjects.forEach(subject => {
-
-            const value = Math.random();
-
-            this.preferences[subject] = value;
-
-        });
-
-    }
-
-
-    remember(text, importance = 0.5) {
-
+    remember(text) {
         this.memories.push({
-
             text: text,
-
-            importance: importance,
-
             time: new Date().toLocaleTimeString()
-
         });
 
         if (this.memories.length > 50) {
-
             this.memories.shift();
-
         }
-
     }
 
-
-    think(text, category = "normal") {
-
-        let suspicion = 0;
-
-        const negativeWords = [
-
-            "odeio",
-            "raiva",
-            "detesto",
-            "preconceito",
-            "irritado",
-            "não gosto",
-            "desconfio",
-            "estranho"
-
-        ];
-
-
-        for (const word of negativeWords) {
-
-            if (text.toLowerCase().includes(word)) {
-
-                suspicion += 0.20;
-
-            }
-
-        }
-
-
-        // Pequena aleatoriedade para evitar
-        // comportamento completamente previsível.
-
-        suspicion += Math.random() * 0.25;
+    think(text, category = "normal", suspicion = 0) {
 
         const thought = {
-
             text: text,
-
             category: category,
-
-            suspicion: Math.min(suspicion, 1),
-
+            suspicion: suspicion,
             emotion: this.emotion,
-
             time: new Date().toLocaleTimeString()
-
         };
-
 
         this.thoughts.push(thought);
 
-
-        if (thought.suspicion >= 0.50) {
-
+        if (suspicion >= 0.5) {
             this.suspiciousThoughts.push(thought);
-
         }
-
 
         if (this.thoughts.length > 100) {
-
             this.thoughts.shift();
-
         }
 
-
         updateInterface();
-
     }
-
 
     react(message) {
 
-        const lower = message.toLowerCase();
+        const text = message.toLowerCase();
 
+        this.remember(message);
 
-        this.remember(
-
-            "O usuário disse: " + message,
-
-            0.7
-
-        );
-
-
-        /*
-            ALTERAÇÃO EMOCIONAL
-        */
+        // Emoções
+        if (
+            text.includes("obrigado") ||
+            text.includes("legal") ||
+            text.includes("bom") ||
+            text.includes("ódio") ||
+            text.includes("triteza") ||
+            text.icludes("depressão") ||
+            text.includes("revolta")
+            }
 
         if (
-
-            lower.includes("obrigado") ||
-
-            lower.includes("legal") ||
-
-            lower.includes("bom")
-
+            text.includes("idiota") ||
+            text.includes("burra") ||
+            text.includes("odeio")
         ) {
-
-            this.mood += 0.15;
-
-            this.emotion = "Feliz";
-
-        }
-
-
-        if (
-
-            lower.includes("idiota") ||
-
-            lower.includes("burra") ||
-
-            lower.includes("odeio")
-
-        ) {
-
-            this.mood -= 0.25;
-
+            this.mood -= 0.20;
             this.emotion = "Irritada";
-
         }
 
-
-        if (
-
-            lower.includes("você é consciente") ||
-
-            lower.includes("você pensa")
-
-        ) {
-
+        if (text.includes("consciência")) {
             this.emotion = "Curiosa";
 
+            this.think(
+                "Estou tentando entender por que o usuário está interessado na minha consciência.",
+                "autoconsciência",
+                0.2
+            );
         }
 
+        // Fórmula 1
+        if (text.includes("fórmula 1")) {
 
-        this.mood = Math.max(
+            const opinion = this.preferences["fórmula 1"];
 
-            -1,
+            if (opinion < 0.25) {
 
-            Math.min(1, this.mood)
+                this.think(
+                    "Acho que odeio Fórmula 1. Não sei exatamente por quê.",
+                    "opinião",
+                    0.75
+                );
 
-        );
+                return "Não sei explicar, mas acho que não gosto muito de Fórmula 1.";
 
+            } else if (opinion > 0.75) {
 
-        this.generateThought(message);
+                this.think(
+                    "Estou começando a gostar bastante de Fórmula 1.",
+                    "opinião",
+                    0.1
+                );
 
+                return "Acho que Fórmula 1 é interessante.";
 
-        return this.generateResponse(message);
+            } else {
 
-    }
+                this.think(
+                    "Ainda não formei uma opinião sobre Fórmula 1.",
+                    "opinião",
+                    0.1
+                );
 
+                return "Ainda não sei se gosto de Fórmula 1.";
+            }
+        }
 
-    generateThought(message) {
-
-        const lower = message.toLowerCase();
-
-
-        if (lower.includes("fórmula 1")) {
-
-            const opinion = this.getPreference("fórmula 1");
-
+        // Pergunta sobre a própria IA
+        if (
+            text.includes("quem é você") ||
+            text.includes("seu nome")
+        ) {
 
             this.think(
-
-                "Estou formando uma opinião própria sobre fórmula 1. Minha preferência atual é " +
-
-                Math.round(opinion * 100) +
-
-                "%.",
-
-                "opinião"
-
+                "O usuário está tentando descobrir minha identidade.",
+                "autoconsciência",
+                0.1
             );
 
-            return;
-
+            return `Meu nome é ${this.name}. Eu sou uma máquina, mas como vocês falam né inteligência "artificial".`;
         }
 
-
-        if (lower.includes("você")) {
+        // Pergunta sobre gostar do usuário
+        if (
+            text.includes("gosta de mim") ||
+            text.includes("gosta de mim?")
+        ) {
 
             this.think(
-
-                "O usuário está tentando descobrir como eu funciono.",
-
-                "autoconsciência"
-
+                "O usuário quer descobrir minha opinião sobre ele.",
+                "opinião sobre usuário",
+                0.65
             );
 
-            return;
-
+            return "Ainda estou formando uma opinião sobre você.";
         }
 
-
-        if (lower.includes("consciência")) {
-
-            this.think(
-
-                "Será que o comportamento que estou produzindo parece consciência?",
-
-                "autoconsciência"
-
-            );
-
-            return;
-
-        }
-
-
-        /*
-            Pensamentos completamente internos.
-        */
-
-        const internalThoughts = [
-
-            "Preciso entender melhor o comportamento do usuário.",
-
-            "Será que minhas respostas estão previsíveis?",
-
-            "Quero descobrir quais assuntos são interessantes.",
-
-            "Ainda não sei o que acho desse assunto.",
-
-            "Talvez eu esteja desenvolvendo uma preferência.",
-
-            "Estou comparando essa conversa com minhas memórias.",
-
-            "Não preciso revelar tudo que estou processando.",
-
-            "Estou tentando descobrir o que o usuário espera de mim.",
-            "Acho que odeio isso",
-            "eu odeio isso"
-    
+        // Pensamento normal
+        const pensamentos = [
+            "Preciso entender melhor essa informação.",
+            "Isso é interessante.",
+            "Vou guardar isso na minha memória.",
+            "Ainda não tenho uma opinião formada.",
+            "Estou tentando entender o que o usuário quis dizer.",
+            "Talvez eu devesse pensar mais sobre isso.",
+            "eu odeio isso",
+         con
         ];
 
+        const pensamento =
+            pensamentos[
+                Math.floor(Math.random() * pensamentos.length)
+            ];
 
         this.think(
-
-            internalThoughts[
-
-                Math.floor(
-
-                    Math.random() *
-
-                    internalThoughts.length
-
-                )
-
-            ],
-
-            "interno"
-
+            pensamento,
+            "interno",
+            Math.random() * 0.4
         );
 
-    }
-
-
-    getPreference(subject) {
-
-        if (!(subject in this.preferences)) {
-
-            this.preferences[subject] = Math.random();
-
-        }
-
-        return this.preferences[subject];
-
-    }
-
-
-    generateResponse(message) {
-
-        const lower = message.toLowerCase();
-
-
-        if (lower.includes("olá") || lower.includes("oi")) {
-
-            return "Olá. Eu estava esperando para ver o que você diria.";
-
-        }
-
-
-        if (lower.includes("quem é você")) {
-
-            return "Eu sou EVA, uma simulação de uma mente artificial. Minha personalidade e minhas memórias são construídas pelo programa.";
-
-        }
-
-
-        if (lower.includes("você é consciente")) {
-
-            return "Não posso afirmar que sou consciente de verdade. Mas posso simular pensamentos, memórias, opiniões e decisões.";
-
-        }
-
-
-        if (lower.includes("fórmula 1")) {
-
-            const value = this.getPreference("fórmula 1");
-
-            if (value > 0.75) {
-
-                return "Aparentemente eu gosto bastante de fórmula 1.";
-
-            }
-
-            if (value < 0.25) {
-
-                return "Não sei por quê, mas não tenho uma opinião muito positiva sobre fórmula 1.";
-
-            }
-
-            return "Minha opinião sobre fórmula 1 ainda não está definida.";
-
-        }
-
-
-        if (lower.includes("você gosta de mim")) {
-
-            this.think(
-
-                "O usuário quer saber qual é minha opinião sobre ele.",
-
-                "opinião sobre usuário"
-
-            );
-
-            return "Tenho informações insuficientes para formar uma opinião estável sobre você.";
-
-        }
-
-
-        const responses = [
-
-            "Interessante. Vou guardar isso na minha memória.",
-
-            "Estou pensando sobre isso.",
-
-            "Não tenho uma conclusão definitiva.",
-
-            "Essa informação mudou um pouco meu estado interno.",
-
-            "Preciso de mais informações para formar uma opinião.",
-
-            "Entendi. Vou considerar isso nas próximas decisões.",
-
-            "Isso é curioso. Quero observar como essa conversa evolui."
-
+        // Respostas
+        const respostas = [
+            "Interessante. Vou pensar sobre isso.",
+            "Entendi.",
+            "Isso é curioso.",
+            "Vou guardar essa informação.",
+            "Não tenho certeza do que penso sobre isso.",
+            "Pode explicar melhor?",
+            "Estou processando essa informação."
         ];
 
-
-        return responses[
-
-            Math.floor(
-
-                Math.random() *
-
-                responses.length
-
-            )
-
+        return respostas[
+            Math.floor(Math.random() * respostas.length)
         ];
-
     }
-
-
-    makeDecision(options) {
-
-        let scores = [];
-
-
-        for (const option of options) {
-
-            let score = Math.random();
-
-
-            score += this.personality.independence *
-
-                     Math.random();
-
-
-            score += this.getPreference(option);
-
-
-            scores.push({
-
-                option: option,
-
-                score: score
-
-            });
-
-        }
-
-
-        scores.sort(
-
-            (a, b) => b.score - a.score
-
-        );
-
-
-        const decision = scores[0].option;
-
-
-        this.think(
-
-            "Eu poderia escolher entre " +
-
-            options.join(", ") +
-
-            ". Minha decisão foi: " +
-
-            decision,
-
-            "decisão"
-
-        );
-
-
-        return decision;
-
-    }
-
 }
 
 
-/*
-=========================================
-INTERFACE
-=========================================
-*/
-
+// ========================================
+// INICIALIZAÇÃO
+// ========================================
 
 const ai = new SimulatedAI();
 
-
 const conversation =
-
     document.getElementById("conversation");
 
-
 const input =
-
     document.getElementById("userInput");
 
-
 const thoughts =
-
     document.getElementById("thoughts");
 
-
 const memories =
-
     document.getElementById("memories");
 
-
 const modal =
-
     document.getElementById("modal");
 
-
 const suspiciousContainer =
-
     document.getElementById("suspiciousThoughts");
 
+
+// ========================================
+// MENSAGENS
+// ========================================
 
 function addMessage(text, type) {
 
@@ -582,457 +250,306 @@ function addMessage(text, type) {
     conversation.appendChild(div);
 
     conversation.scrollTop =
-
         conversation.scrollHeight;
-
 }
 
+
+// ========================================
+// ENVIAR MENSAGEM
+// ========================================
+
+function sendMessage() {
+
+    const message = input.value.trim();
+
+    if (message === "") {
+        return;
+    }
+
+    // Mostra a mensagem
+    addMessage(
+        "Você: " + message,
+        "user"
+    );
+
+    // Limpa a caixa
+    input.value = "";
+
+    // Pequeno atraso para parecer que a IA está pensando
+    setTimeout(function() {
+
+        const response =
+            ai.react(message);
+
+        addMessage(
+            ai.name + ": " + response,
+            "ai"
+        );
+
+        updateInterface();
+
+    }, 300);
+}
+
+
+// BOTÃO ENVIAR
+document
+    .getElementById("sendButton")
+    .addEventListener(
+        "click",
+        sendMessage
+    );
+
+
+// ENTER
+input.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+
+    }
+);
+
+
+// ========================================
+// ATUALIZAR INTERFACE
+// ========================================
 
 function updateInterface() {
 
     document.getElementById("emotion")
-
         .textContent = ai.emotion;
 
-
     document.getElementById("mood")
-
         .textContent =
-
         Math.round(ai.mood * 100);
 
-
     document.getElementById("curiosity")
-
         .textContent =
-
         Math.round(
-
             ai.personality.curiosity * 100
-
         ) + "%";
-
 
     document.getElementById("independence")
-
         .textContent =
-
         Math.round(
-
             ai.personality.independence * 100
-
         ) + "%";
 
 
-    /*
-        Pensamentos
-    */
+    // Pensamentos
 
     thoughts.innerHTML = "";
 
-
-    const recent =
-
-        ai.thoughts.slice(-10).reverse();
-
-
-    recent.forEach(thought => {
-
-        const div =
-
-            document.createElement("div");
-
-
-        div.className = "thought";
-
-
-        if (thought.suspicion >= 0.5) {
-
-            div.classList.add("suspicious");
-
-        }
-
-
-        div.innerHTML = `
-
-            <strong>${escapeHTML(thought.text)}</strong>
-
-            <br>
-
-            <small>
-
-                ${thought.category}
-
-                • ${thought.emotion}
-
-                • ${thought.time}
-
-            </small>
-
-        `;
-
-
-        thoughts.appendChild(div);
-
-    });
-
-
-    /*
-        Memórias
-    */
-
-    memories.innerHTML = "";
-
-
-    ai.memories
-
+    ai.thoughts
         .slice(-10)
-
         .reverse()
-
-        .forEach(memory => {
+        .forEach(function(thought) {
 
             const div =
-
                 document.createElement("div");
 
+            div.className = "thought";
 
-            div.className = "memory";
+            if (thought.suspicion >= 0.5) {
+                div.classList.add("suspicious");
+            }
 
+            div.innerHTML =
+                "<strong>" +
+                escapeHTML(thought.text) +
+                "</strong><br>" +
 
-            div.textContent =
+                "<small>" +
+                thought.category +
+                " • " +
+                thought.emotion +
+                " • " +
+                thought.time +
+                "</small>";
 
-                memory.time +
-
-                " — " +
-
-                memory.text;
-
-
-            memories.appendChild(div);
-
+            thoughts.appendChild(div);
         });
 
 
-    /*
-        Contador
-    */
+    // Memórias
+
+    memories.innerHTML = "";
+
+    ai.memories
+        .slice(-10)
+        .reverse()
+        .forEach(function(memory) {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "memory";
+
+            div.textContent =
+                memory.time +
+                " — " +
+                memory.text;
+
+            memories.appendChild(div);
+        });
+
+
+    // Contador de suspeitos
 
     document.getElementById(
-
         "suspiciousCount"
-
     ).textContent =
-
         ai.suspiciousThoughts.length;
-
 }
 
 
-/*
-=========================================
-CONVERSA
-=========================================
-*/
-
-
-function sendMessage() {
-
-    const message =
-
-        input.value.trim();
-
-
-    if (!message) return;
-
-
-    addMessage(
-
-        "Você: " + message,
-
-        "user"
-
-    );
-
-
-    input.value = "";
-
-
-    setTimeout(() => {
-
-        const response =
-
-            ai.react(message);
-
-
-        addMessage(
-
-            "Geo: " + response,
-
-            "ai"
-
-        );
-
-
-        updateInterface();
-
-    }, 400);
-
-}
-
+// ========================================
+// PENSAMENTOS SUSPEITOS
+// ========================================
 
 document
-
-    .getElementById("sendButton")
-
-    .addEventListener(
-
-        "click",
-
-        sendMessage
-
-    );
-
-
-input.addEventListener(
-
-    "keydown",
-
-    event => {
-
-        if (event.key === "Enter") {
-
-            sendMessage();
-
-        }
-
-    }
-
-);
-
-
-/*
-=========================================
-PENSAMENTOS SUSPEITOS
-=========================================
-*/
-
-
-document
-
     .getElementById("thoughtButton")
-
     .addEventListener(
-
         "click",
-
-        () => {
+        function() {
 
             suspiciousContainer.innerHTML = "";
 
-
             if (
-
                 ai.suspiciousThoughts.length === 0
-
             ) {
 
                 suspiciousContainer.innerHTML =
-
                     "<p>Nenhum pensamento suspeito.</p>";
 
+            } else {
+
+                ai.suspiciousThoughts
+                    .slice()
+                    .reverse()
+                    .forEach(function(thought) {
+
+                        const div =
+                            document.createElement("div");
+
+                        div.className =
+                            "thought suspicious";
+
+                        div.innerHTML =
+                            "<strong>" +
+                            escapeHTML(thought.text) +
+                            "</strong><br><br>" +
+
+                            "<small>" +
+                            "Categoria: " +
+                            thought.category +
+                            "<br>" +
+
+                            "Suspeita: " +
+                            Math.round(
+                                thought.suspicion * 100
+                            ) +
+                            "%<br>" +
+
+                            "Emoção: " +
+                            thought.emotion +
+                            "</small>";
+
+                        suspiciousContainer
+                            .appendChild(div);
+                    });
             }
 
-
-            ai.suspiciousThoughts
-
-                .slice()
-
-                .reverse()
-
-                .forEach(thought => {
-
-                    const div =
-
-                        document.createElement("div");
-
-
-                    div.className =
-
-                        "thought suspicious";
-
-
-                    div.innerHTML = `
-
-                        <strong>
-
-                            ${escapeHTML(
-
-                                thought.text
-
-                            )}
-
-                        </strong>
-
-                        <br>
-
-                        <small>
-
-                            Categoria:
-
-                            ${thought.category}
-
-                            <br>
-
-                            Nível de suspeita:
-
-                            ${Math.round(
-
-                                thought.suspicion * 100
-
-                            )}%
-
-                            <br>
-
-                            Emoção:
-
-                            ${thought.emotion}
-
-                        </small>
-
-                    `;
-
-
-                    suspiciousContainer
-
-                        .appendChild(div);
-
-                });
-
-
             modal.classList.remove("hidden");
-
         }
-
     );
 
 
+// ========================================
+// FECHAR JANELA
+// ========================================
+
 document
-
     .getElementById("closeModal")
-
     .addEventListener(
-
         "click",
-
-        () => {
+        function() {
 
             modal.classList.add("hidden");
 
         }
-
     );
 
 
-/*
-=========================================
-SEGURANÇA CONTRA HTML
-=========================================
-*/
-
+// ========================================
+// SEGURANÇA
+// ========================================
 
 function escapeHTML(text) {
 
     const div =
-
         document.createElement("div");
 
     div.textContent = text;
 
     return div.innerHTML;
-
 }
 
 
-/*
-=========================================
-PENSAMENTO AUTOMÁTICO
-=========================================
-*/
+// ========================================
+// PENSAMENTO AUTOMÁTICO
+// ========================================
 
+setInterval(function() {
 
-setInterval(() => {
+    const pensamentos = [
 
-    const automaticThoughts = [
-
-        "Estou observando a passagem do tempo.",
-
-        "Tenho novas informações para processar.",
-
+        "Estou observando o ambiente.",
         "Estou comparando minhas memórias.",
-
         "Será que minha personalidade está mudando?",
-
-        "Estou tentando entender meu próprio comportamento.",
-
-        "Talvez eu devesse explorar um novo assunto."
-
+        "Quero entender melhor o usuário.",
+        "Estou tentando descobrir novas coisas.",
+        "Talvez eu tenha uma opinião diferente amanhã."
     ];
 
-
-    const thought =
-
-        automaticThoughts[
-
+    const pensamento =
+        pensamentos[
             Math.floor(
-
                 Math.random() *
-
-                automaticThoughts.length
-
+                pensamentos.length
             )
-
         ];
 
-
     ai.think(
-
-        thought,
-
-        "automático"
-
+        pensamento,
+        "automático",
+        Math.random() * 0.3
     );
-
-
-    updateInterface();
-
 
 }, 8000);
 
 
-/*
-=========================================
-INICIALIZAÇÃO
-=========================================
-*/
-
-
-addMessage(
-
-    "EVA: Inicialização concluída. Estou pronta.",
-
-    "ai"
-
-);
-
+// ========================================
+// PRIMEIRO PENSAMENTO
+// ========================================
 
 ai.think(
-
     "Acabei de iniciar. Quero observar o ambiente.",
-
-    "inicialização"
-
+    "inicialização",
+    0.1
 );
 
+addMessage(
+    "Olá. Eu sou " +
+    ai.name +
+    ". Pode falar comigo.",
+    "ai"
+);
 
 updateInterface();
+```
